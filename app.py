@@ -12,6 +12,24 @@ st.title("⚡ Physics AI Solver")
 # Mode selection
 mode = st.radio("Select Mode:", ["Learning", "Exam"])
 
+level = st.selectbox(
+    "Your level:",
+    [
+        "High School",
+        "Undergraduate",
+        "Graduate"
+    ]
+)
+
+level_instruction = {
+    "High School": "Explain from basics. Avoid advanced math. Focus on intuition and simple steps.",
+    
+    "Undergraduate": "Assume familiarity with core concepts. Explain clearly with proper formulas and reasoning.",
+    
+    "Graduate": "Be concise, rigorous, and mathematically precise. Skip basic explanations."
+}
+
+
 # Input box
 problem = st.text_area(
     "Enter your physics problem:",
@@ -44,6 +62,8 @@ if st.button("Solve"):
             You are an excellent physics professor.
 
             Explain the solution in a natural, flowing way like a good teacher.
+
+            {level_instruction}
 
             - Start by understanding the problem
             - Introduce the key idea or formula naturally
