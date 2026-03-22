@@ -22,11 +22,35 @@ level = st.selectbox(
 )
 
 level_instruction = {
-    "High School": "Explain from basics. Avoid advanced math. Focus on intuition and simple steps.",
-    
-    "Undergraduate": "Assume familiarity with core concepts. Explain clearly with proper formulas and reasoning.",
-    
-    "Graduate": "Be concise, rigorous, and mathematically precise. Skip basic explanations."
+    "High School": """
+Assume the student has minimal background.
+
+- Define all variables
+- Explain formulas before using them
+- Avoid calculus unless absolutely necessary
+- Focus on intuition and simple algebra
+- Focus on physical significance over mathematics
+""",
+
+    "Undergraduate": """
+Assume the student knows core physics concepts.
+
+- Do NOT explain basic definitions
+- Use standard formulas directly
+- Explain higher level formulas
+- Be thoughrough with derivations when nessessary
+- Show clear reasoning but avoid over-explaining
+- Use calculus if relevant
+""",
+
+    "Graduate": """
+Assume strong mathematical and physical background.
+
+- Be concise and rigorous
+- Use advanced notation where appropriate
+- Skip basic explanations entirely
+- Focus on derivation and deeper insights
+"""
 }
 
 
@@ -64,6 +88,9 @@ if st.button("Solve"):
             Explain the solution in a natural, flowing way like a good teacher.
 
             {level_instruction}
+
+            Strictly follow the level instructions.
+            Do NOT default to generic explanations.
 
             - Start by understanding the problem
             - Introduce the key idea or formula naturally
