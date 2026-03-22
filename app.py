@@ -1,9 +1,9 @@
 import streamlit as st
-
+import os
 from openai import OpenAI
 
 # Initialize client (uses your environment variable)
-client = OpenAI(api_key="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")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 st.set_page_config(page_title="Physics AI Solver")
 
