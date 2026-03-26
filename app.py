@@ -89,7 +89,7 @@ if st.button("Solve"):
 
             Explain the solution in a natural, flowing way like a good teacher.
 
-            {level_instruction}
+            {level_instruction[level]}
 
             Strictly follow the level instructions.
             Do NOT default to generic explanations.
@@ -158,10 +158,34 @@ Problem:{problem}"""
                 
             )
 
+        
+        #FORMATTING CLEAN UP
         solution = response.choices[0].message.content
-        solution = response.choices[0].message.content
-        solution = re.sub(r"\\\[(.*?)\\\]", r"$\1$", solution)
+        solution = re.sub(r"\\\[(.*?)\\\]", r"$\1$", solution, flags=re.DOTALL)
         solution = solution.replace("\\\\", "\\")
+        solution = wrap_latex_expressions(solution)
 
         st.markdown("### 📘 Solution")
         st.markdown(solution)
+
+def wrap_latex_expressions(text):
+    # Wrap expressions that look like equations but are not in $
+    lines = text.split("\n")
+    new_lines = []
+
+    for line in lines:
+        # If line contains math symbols but no $
+        if (
+            any(sym in line for sym in ["\\", "=", "^", "_"])
+            and "$" not in line
+            and len(line.strip()) < 120  # avoid long paragraphs
+        ):
+            line = f"${line.strip()}$"
+
+        new_lines.append(line)
+
+    return "\n".join(new_lines)
+
+        
+
+        
