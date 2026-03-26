@@ -1,5 +1,7 @@
 import streamlit as st
 import os
+import re
+
 from openai import OpenAI
 
 # Initialize client (uses your environment variable)
@@ -10,7 +12,7 @@ st.set_page_config(page_title="Physics AI Solver")
 st.title("⚡ Physics AI Solver")
 
 # Mode selection
-mode = st.radio("Select Mode:", ["Learning", "Exam"])
+mode = st.radio("Select Mode:", ["Learning", "Quick"])
 
 level = st.selectbox(
     "Your level:",
@@ -121,6 +123,12 @@ if st.button("Solve"):
             Avoid long dense blocks of text.
             Explain like you're teaching, not writing a textbook.
 
+            At the end, include:
+            🧠 Quick Summary:
+            - Key formula
+            - When to use it
+            - One-line method to solve similar problems
+
             Problem:{problem}"""
             
 
@@ -151,6 +159,9 @@ Problem:{problem}"""
             )
 
         solution = response.choices[0].message.content
+        solution = response.choices[0].message.content
+        solution = re.sub(r"\\\[(.*?)\\\]", r"$\1$", solution)
+        solution = solution.replace("\\\\", "\\")
 
         st.markdown("### 📘 Solution")
         st.write(solution)
