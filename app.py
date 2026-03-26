@@ -164,4 +164,4 @@ Problem:{problem}"""
         solution = solution.replace("\\\\", "\\")
 
         st.markdown("### 📘 Solution")
-        st.write(solution)
+        st.markdown(solution)
